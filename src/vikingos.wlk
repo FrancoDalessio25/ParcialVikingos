@@ -1,3 +1,5 @@
+// HOLA
+
 class Vikingo{
 	var property tipoCasta = karl
 	var property tieneArma = true
@@ -106,9 +108,24 @@ class Amurallada inherits Aldea{
 }
 
 class Capital inherits Lugar{
-	var monedasDeOro
+	var property defensores 
+	var riqueza
 
+	method valeLaPenaPara(cantInvasores) =
+		cantInvasores <= self.botin(cantInvasores) / 3
+
+	override method botin(cantInvasores) =
+		 self.defensoresDerrotados(cantInvasores) * riqueza
 	
+	override method destruirse(cantInvasores){
+		defensores -= self.defensoresDerrotados(cantInvasores)
+	}
+	override method serInvadidoPor(expedicion){
+		expedicion.aumentarVidasCobradasEn(self.defensoresDerrotados(expedicion.cantidadIntegrantes()))
+		super(expedicion)
+	}
+	method defensoresDerrotados(cantInvasores) = defensores.min(cantInvasores)
+
 }
 
 
